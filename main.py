@@ -47,3 +47,8 @@ def root():
         "version": "1.0",
         "endpoints": ["/tasks"]
     }
+
+# Health Check
+@app.get("/health", summary="Health Check")
+def health():
+    return {"status": "ok"}
