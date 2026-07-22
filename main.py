@@ -52,3 +52,23 @@ def root():
 @app.get("/health", summary="Health Check")
 def health():
     return {"status": "ok"}
+
+# Get All Tasks
+@app.get("/tasks", summary="Get All Tasks")
+def get_tasks():
+    return tasks
+
+
+# Get Task By ID
+@app.get("/tasks/{task_id}", summary="Get Task By ID")
+def get_task(task_id: int):
+
+    for task in tasks:
+        if task["id"] == task_id:
+            return task
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"Task {task_id} not found"
+    )
+
