@@ -72,3 +72,30 @@ def get_task(task_id: int):
         detail=f"Task {task_id} not found"
     )
 
+# Create Task
+@app.post(
+    "/tasks",
+    summary="Create New Task",
+    status_code=status.HTTP_201_CREATED
+)
+def create_task(task: TaskCreate):
+
+    title = task.title.strip()
+
+    if title == "":
+        raise HTTPException(
+            status_code=400,
+            detail="Title cannot be empty"
+        )
+
+    next_id = max(task["id"] for task in tasks) + 1 if tasks else 1
+
+    new_task = {
+        "id": next_id,
+        "title": title,
+        "done": False
+    }
+
+    tasks.append(new_task)
+
+    return new_task
