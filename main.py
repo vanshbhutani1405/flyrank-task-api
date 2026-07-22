@@ -9,3 +9,41 @@ app = FastAPI(
     version="1.0"
 )
 
+# Request Models
+class TaskCreate(BaseModel):
+    title: str
+
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    done: Optional[bool] = None
+
+
+# In-memory Database
+tasks = [
+    {
+        "id": 1,
+        "title": "Learn FastAPI",
+        "done": False
+    },
+    {
+        "id": 2,
+        "title": "Complete FlyRank Assignment",
+        "done": False
+    },
+    {
+        "id": 3,
+        "title": "Practice Python",
+        "done": True
+    }
+]
+
+
+# Root Endpoint
+@app.get("/", summary="API Information")
+def root():
+    return {
+        "name": "Task API",
+        "version": "1.0",
+        "endpoints": ["/tasks"]
+    }
